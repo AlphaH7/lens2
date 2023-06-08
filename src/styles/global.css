@@ -92,8 +92,8 @@ input::placeholder {
 }
 
 .lens-list-elem-ctr{
-  animation: 1s none 0s 1 animateNodeView;
-  transition: all 0.25s;
+  animation: 1s none 0s 0.25 animateNodeView;
+  transition: all 1s;
 }
 
 @keyframes animateNodeView {

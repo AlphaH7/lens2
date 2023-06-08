@@ -11,7 +11,7 @@ describe('Index page', () => {
       render(<Index />);
 
       const heading = screen.getByRole('heading', {
-        name: /An Interacctive React Search Plugin/,
+        name: /An Interactive React Search Plugin/,
       });
 
       expect(heading).toBeInTheDocument();

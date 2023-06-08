@@ -18,6 +18,7 @@ interface LensProps {
   listCtrStyle?: string;
   emptyViewRenderer: (input: string) => JSX.Element;
   inputStyles: string;
+  placeholderText: string;
 }
 
 const Lens: React.FC<LensProps> = (props) => {
@@ -33,6 +34,7 @@ const Lens: React.FC<LensProps> = (props) => {
     listCtrStyle = '',
     emptyViewRenderer,
     inputStyles = '',
+    placeholderText = '',
   } = props;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputString(event.target.value);
@@ -97,7 +99,7 @@ const Lens: React.FC<LensProps> = (props) => {
         onChange={handleChange}
         onKeyDown={onKeyPressed}
         className={inputStyles}
-        placeholder="Search users by ID, name, address"
+        placeholder={placeholderText}
       />
 
       {inputString.length > 0 && (
