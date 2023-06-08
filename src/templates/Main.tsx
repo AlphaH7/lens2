@@ -16,7 +16,7 @@ const Main = (props: IMainProps) => (
 
       <main className="content h-full text-xl">{props.children}</main>
 
-      <footer className="fixed bottom-0 w-full max-w-screen-md  py-2 text-center text-sm">
+      <footer className="fixed bottom-0 w-full max-w-screen-md py-2 text-center text-sm text-white">
         © Copyright {new Date().getFullYear()} {AppConfig.title}. Made by{' '}
         <a href="https://www.alistier.dev">Alistier X.</a>.
         {/*

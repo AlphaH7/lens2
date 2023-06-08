@@ -10,9 +10,11 @@ type State = boolean;
 type Action = { type: 'fetching' } | { type: 'fetched' };
 
 interface IData {
-  id: string;
-  name: string;
   address: string;
+  id: string;
+  items: string[];
+  name: string;
+  pincode: string;
   [key: string]: any;
 }
 
@@ -48,6 +50,42 @@ const Index = () => {
     fetchData();
   }, []);
 
+  const renderHighlightedField = (str: string, key: string, input: string) => {
+    const strTemp = str.replace(new RegExp(input, 'gi'), `+-+${input}+-+`);
+    const strArr = strTemp.split('+-+');
+    return strArr.map((data) =>
+      input === data ? (
+        <span className="text-orange-600" key={str + key}>
+          {input}
+        </span>
+      ) : (
+        data
+      )
+    );
+  };
+
+  const listElementRenderer = (data: IData, input: string) => (
+    <>
+      <p className="text-sm text-white">
+        {renderHighlightedField(data.id, JSON.stringify(data), input)}
+      </p>
+      <li className="my-1 border-y border-white py-1 text-sm text-white">
+        {renderHighlightedField(
+          `${data.name} bought - ${data.items.join(', ')}`,
+          JSON.stringify(data),
+          input
+        )}
+      </li>
+      <p className="text-sm text-white">
+        {renderHighlightedField(
+          `${data.address}, ${data.pincode}`,
+          JSON.stringify(data),
+          input
+        )}
+      </p>
+    </>
+  );
+
   return (
     <Main
       meta={
@@ -66,6 +104,10 @@ const Index = () => {
             onOptionSelect={(optn: any) => {
               console.log(optn);
             }}
+            hoverStyles="bg-white bg-opacity-30"
+            listElementStyles="w-full cursor-pointer px-2 py-3 text-left"
+            listElementRenderer={listElementRenderer}
+            listCtrStyle="absolute top-full z-10 mt-2 h-64 w-[400px] overflow-auto rounded-lg border-2 border-white bg-white bg-opacity-10 shadow-lg transition-all"
           />
         ) : null}
       </div>

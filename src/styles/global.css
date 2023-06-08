@@ -38,11 +38,11 @@ font-w-bold{
 @tailwind base;
 
 a {
-  @apply text-blue-700;
+  @apply text-blue-200;
 }
 
 a:hover {
-  @apply border-b-2 border-orange-700;
+  @apply text-orange-700;
 }
 
 @tailwind components;
@@ -84,4 +84,40 @@ input::placeholder {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.lens-list-ctr{
+  animation: 1s none 0s 1 animateResultView;
+  transform-origin: top;
+}
+
+.lens-list-elem-ctr{
+  animation: 1s none 0s 1 animateNodeView;
+  transition: all 0.25s;
+}
+
+@keyframes animateNodeView {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes animateResultView {
+  0% {
+    opacity: 0;
+    transform: scale3d(0,0,0);
+  }
+  50% {
+    transform: scale3d(1,0,1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1,1,1);
+  }
 }

@@ -1,22 +1,35 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 interface IData {
-  id: string;
-  name: string;
   address: string;
+  id: string;
+  items: string[];
+  name: string;
+  pincode: string;
   [key: string]: any;
 }
 
 interface LensProps {
   onOptionSelect: (data: IData) => void;
   listData: Array<IData>;
+  listElementStyles?: string;
+  hoverStyles?: string;
+  listElementRenderer: (data: IData, input: string) => JSX.Element;
+  listCtrStyle?: string;
 }
 
 const Lens: React.FC<LensProps> = (props) => {
   const [inputString, setInputString] = useState('');
   const [hoveredIndex, setHoveredIndex] = useState(0);
   const resultRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const { listData, onOptionSelect } = props;
+  const {
+    listData,
+    onOptionSelect,
+    listElementStyles = '',
+    hoverStyles = '',
+    listElementRenderer,
+    listCtrStyle = '',
+  } = props;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputString(event.target.value);
   };
@@ -37,21 +50,6 @@ const Lens: React.FC<LensProps> = (props) => {
               .includes(inputString.toLowerCase());
           });
         });
-  };
-
-  const renderHighlightedField = (str: string, key: string) => {
-    const input = inputString;
-    const strTemp = str.replace(new RegExp(input, 'gi'), `+-+${input}+-+`);
-    const strArr = strTemp.split('+-+');
-    return strArr.map((data) =>
-      input === data ? (
-        <span className="text-orange-600" key={str + key}>
-          {input}
-        </span>
-      ) : (
-        data
-      )
-    );
   };
 
   const onKeyPressed = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -99,7 +97,7 @@ const Lens: React.FC<LensProps> = (props) => {
       />
 
       {inputString.length > 0 && (
-        <div className="absolute top-full z-10 mt-2 h-64 w-[400px] overflow-auto rounded-lg border-2 border-white bg-white bg-opacity-10 shadow-lg transition-all">
+        <div className={`lens-list-ctr ${listCtrStyle}`}>
           {filteredResults.length === 0 ? (
             <div className="px-4 py-3">
               {/* <EmbaressedIcon /> */}
@@ -109,8 +107,8 @@ const Lens: React.FC<LensProps> = (props) => {
             filteredResults.map((data, i) => (
               <button
                 key={data.id}
-                className={`w-full cursor-pointer px-2 py-3 text-left ${
-                  i === hoveredIndex ? 'bg-white bg-opacity-30' : ''
+                className={`${listElementStyles} lens-list-elem-ctr ${
+                  i === hoveredIndex ? hoverStyles : ''
                 }`}
                 type="button"
                 onClick={() => onOptionSelect(data)}
@@ -119,15 +117,7 @@ const Lens: React.FC<LensProps> = (props) => {
                   resultRefs.current[i] = el;
                 }}
               >
-                <p className="text-sm text-white">
-                  {renderHighlightedField(data.id, JSON.stringify(data))}
-                </p>
-                <li className="my-1 border-y border-white py-1 text-sm text-white">
-                  {renderHighlightedField(data.name, JSON.stringify(data))}
-                </li>
-                <p className="text-sm text-white">
-                  {renderHighlightedField(data.address, JSON.stringify(data))}
-                </p>
+                {listElementRenderer(data, inputString)}
               </button>
             ))
           )}
