@@ -3,6 +3,6 @@
 export const AppConfig = {
   site_name: 'Lens',
   title: 'Lens',
-  description: 'An Interacctive React Search Plugin',
+  description: 'An Interactive React JS Search Plugin',
   locale: 'en',
 };

@@ -1,3 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Mr+Dafoe&family=Montserrat:wght@100;300;400;500;700&display=swap');
+
+
+.web-head{
+  font-family: 'Mr Dafoe', cursive;
+}
+
+body{
+  font-family: 'Montserrat', sans-serif;
+}
+
+font-w-thin{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 100;
+}
+
+font-w-light{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+}
+
+font-w-regular{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+}
+
+
+font-w-medium{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}
+
+font-w-bold{
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+
 @tailwind base;
 
 a {
@@ -5,17 +42,46 @@ a {
 }
 
 a:hover {
-  @apply border-b-2 border-blue-700;
+  @apply border-b-2 border-orange-700;
 }
 
 @tailwind components;
 
 @tailwind utilities;
 
-.content p {
-  @apply my-6;
+html, div#__next, body{
+  height: 100%;
+  width: 100%;
 }
 
-.content ul {
-  @apply my-6;
+body{
+  background: #ee7752;  /* fallback for old browsers */
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #1c3d35);
+  background-size: 400% 400%;
+}
+
+input{
+  border-width: 2px !important;
+}
+
+input::placeholder {
+  font-size: 1rem;  
+  line-height: 1rem;  
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
