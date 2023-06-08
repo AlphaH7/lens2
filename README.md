@@ -1,6 +1,6 @@
-# Lens 2 - An interactive search React JS Plugim
+# Lens 2 - An interactive search React JS Plugin
 
-[Demo](www.alistier.dev)
+[Demo](https://main--kaleidoscopic-raindrop-1108cd.netlify.app/)
 
 🚀 Demo made with Next.js, Tailwind CSS and TypeScript ⚡️ Made with developer experience first: Next.js, TypeScript, ESLint, Prettier, Husky, Lint-Staged, Jest, Testing Library, Commitlint, VSCode, Netlify, PostCSS, Tailwind CSS.
 
