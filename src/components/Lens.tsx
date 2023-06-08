@@ -16,11 +16,13 @@ interface LensProps {
   hoverStyles?: string;
   listElementRenderer: (data: IData, input: string) => JSX.Element;
   listCtrStyle?: string;
+  emptyViewRenderer: (input: string) => JSX.Element;
+  inputStyles: string;
 }
 
 const Lens: React.FC<LensProps> = (props) => {
-  const [inputString, setInputString] = useState('');
-  const [hoveredIndex, setHoveredIndex] = useState(0);
+  const [inputString, setInputString] = useState<string>('');
+  const [hoveredIndex, setHoveredIndex] = useState<number>(0);
   const resultRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const {
     listData,
@@ -29,6 +31,8 @@ const Lens: React.FC<LensProps> = (props) => {
     hoverStyles = '',
     listElementRenderer,
     listCtrStyle = '',
+    emptyViewRenderer,
+    inputStyles = '',
   } = props;
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputString(event.target.value);
@@ -92,35 +96,30 @@ const Lens: React.FC<LensProps> = (props) => {
         value={inputString}
         onChange={handleChange}
         onKeyDown={onKeyPressed}
-        className="h-15 border-white-2 my-5 w-[400px] appearance-none rounded-lg border bg-transparent px-3 py-2 leading-tight text-white shadow transition-all placeholder:font-medium placeholder:text-gray-100 focus:outline-none focus:placeholder:text-gray-500"
-        placeholder="Search users by ID, name or address"
+        className={inputStyles}
+        placeholder="Search users by ID, name, address"
       />
 
       {inputString.length > 0 && (
         <div className={`lens-list-ctr ${listCtrStyle}`}>
-          {filteredResults.length === 0 ? (
-            <div className="px-4 py-3">
-              {/* <EmbaressedIcon /> */}
-              <p className="text-gray-500">No Users Found</p>
-            </div>
-          ) : (
-            filteredResults.map((data, i) => (
-              <button
-                key={data.id}
-                className={`${listElementStyles} lens-list-elem-ctr ${
-                  i === hoveredIndex ? hoverStyles : ''
-                }`}
-                type="button"
-                onClick={() => onOptionSelect(data)}
-                onMouseEnter={() => setHoveredItem(i)}
-                ref={(el) => {
-                  resultRefs.current[i] = el;
-                }}
-              >
-                {listElementRenderer(data, inputString)}
-              </button>
-            ))
-          )}
+          {filteredResults.length === 0
+            ? emptyViewRenderer(inputString)
+            : filteredResults.map((data, i) => (
+                <button
+                  key={data.id}
+                  className={`${listElementStyles} lens-list-elem-ctr ${
+                    i === hoveredIndex ? hoverStyles : ''
+                  }`}
+                  type="button"
+                  onClick={() => onOptionSelect(data)}
+                  onMouseEnter={() => setHoveredItem(i)}
+                  ref={(el) => {
+                    resultRefs.current[i] = el;
+                  }}
+                >
+                  {listElementRenderer(data, inputString)}
+                </button>
+              ))}
         </div>
       )}
     </div>

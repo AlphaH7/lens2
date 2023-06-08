@@ -3,8 +3,8 @@ import { useEffect, useReducer, useState } from 'react';
 import Lens from '@/components/Lens';
 import { Meta } from '@/layouts/Meta';
 import { Main } from '@/templates/Main';
+import apiHelper from '@/utils/ApiHelper';
 import { AppConfig } from '@/utils/AppConfig';
-import client from '@/utils/AppHelper';
 
 type State = boolean;
 type Action = { type: 'fetching' } | { type: 'fetched' };
@@ -37,8 +37,7 @@ const Index = () => {
     const fetchData = async () => {
       dispatch({ type: 'fetching' });
       try {
-        const response = await client.get('/api/users');
-        console.log(response.data);
+        const response = await apiHelper.getUsers();
         setResults(response.data);
       } catch (error) {
         console.error('Error:', error);
@@ -86,6 +85,14 @@ const Index = () => {
     </>
   );
 
+  const emptyViewRenderer = () => {
+    return (
+      <div className="flex h-full w-full items-center justify-center px-4 py-3">
+        <p className="text-gray-500">No Users Found</p>
+      </div>
+    );
+  };
+
   return (
     <Main
       meta={
@@ -97,7 +104,9 @@ const Index = () => {
     >
       <div className="flex h-full w-full flex-col items-center justify-center pb-20">
         <h1 className="web-head text-[70px] text-white">{AppConfig.title}</h1>
-        <h2 className="text-white">{AppConfig.description}</h2>
+        <h2 className="text-sm  text-white md:text-lg">
+          {AppConfig.description}
+        </h2>
         {!isLoading ? (
           <Lens
             listData={results}
@@ -107,7 +116,9 @@ const Index = () => {
             hoverStyles="bg-white bg-opacity-30"
             listElementStyles="w-full cursor-pointer px-2 py-3 text-left"
             listElementRenderer={listElementRenderer}
-            listCtrStyle="absolute top-full z-10 mt-2 h-64 w-[400px] overflow-auto rounded-lg border-2 border-white bg-white bg-opacity-10 shadow-lg transition-all"
+            listCtrStyle="max-w-[90%] absolute top-full z-10 mt-2 h-64 w-[400px] overflow-auto rounded-lg border-2 border-white bg-white bg-opacity-10 shadow-lg transition-all"
+            emptyViewRenderer={emptyViewRenderer}
+            inputStyles="max-w-[90%] h-15 border-white-2 my-5 w-[400px] appearance-none rounded-lg border bg-transparent px-3 py-2 leading-tight text-white shadow transition-all placeholder:font-medium placeholder:text-gray-100 focus:outline-none focus:placeholder:text-gray-500"
           />
         ) : null}
       </div>
