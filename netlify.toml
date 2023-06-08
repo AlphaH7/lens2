@@ -4,3 +4,9 @@
 
 [build.environment]
   NETLIFY_NEXT_PLUGIN_SKIP = "true"
+
+[[redirects]]
+  from = "/api/users"
+  to = "http://www.mocky.io/v2/5ba8efb23100007200c2750c"
+  status = 200
+  force = true
